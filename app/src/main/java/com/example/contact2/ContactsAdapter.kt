@@ -6,43 +6,46 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class ContactsAdapter (private val mContacts: List<Contact>) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>()
 {
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        // Your holder should contain and initialize a member variable
-        // for any view that will be set as you render a row
-        val nameTextView = itemView.findViewById<TextView>(R.id.contact_name)
-        val messageButton = itemView.findViewById<Button>(R.id.message_button)
-    }
 
-    // ... constructor and member variables
-    // Usually involves inflating a layout from XML and returning the holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsAdapter.ViewHolder {
-        val context = parent.context
-        val inflater = LayoutInflater.from(context)
-        // Inflate the custom layout
-        val contactView = inflater.inflate(R.layout.item_contact, parent, false)
-        // Return a new holder instance
-        return ViewHolder(contactView)
+
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contact,parent,false)
+
+        return ViewHolder(view)
     }
 
-    // Involves populating data into the item through holder
     override fun onBindViewHolder(viewHolder: ContactsAdapter.ViewHolder, position: Int) {
-        // Get the data model based on position
+        viewHolder.bind(mContacts[position])
+
+
         val contact: Contact = mContacts.get(position)
-        // Set item views based on your views and data model
-        val textView = viewHolder.nameTextView
+
+        var textView = viewHolder.nameTextView
         textView.setText(contact.name)
+        textView = viewHolder.phoneTextView
+        textView.setText(contact.phone)
         val button = viewHolder.messageButton
         button.text = if (contact.isOnline) "Message" else "Offline"
         button.isEnabled = contact.isOnline
     }
 
-    // Returns the total count of items in the list
+
     override fun getItemCount(): Int {
         return mContacts.size
+    }
+
+    class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
+        val nameTextView = itemView.findViewById<TextView>(R.id.contact_name)
+        val phoneTextView = itemView.findViewById<TextView>(R.id.contact_phone)
+        val messageButton = itemView.findViewById<Button>(R.id.message_button)
+
+        fun bind(contact: Contact){
+
+
+        }
     }
 }
