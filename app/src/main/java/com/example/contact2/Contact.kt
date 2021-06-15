@@ -1,5 +1,7 @@
 package com.example.contact2
 
+import android.content.Intent
+
 data class Contact(val name: String, val phone: String, val photo: String, val isOnline: Boolean) {
 
     companion object {

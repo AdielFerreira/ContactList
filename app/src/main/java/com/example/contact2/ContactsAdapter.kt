@@ -20,10 +20,7 @@ class ContactsAdapter (private val mContacts: List<Contact>) : RecyclerView.Adap
 
     override fun onBindViewHolder(viewHolder: ContactsAdapter.ViewHolder, position: Int) {
         viewHolder.bind(mContacts[position])
-
-
         val contact: Contact = mContacts.get(position)
-
         var textView = viewHolder.nameTextView
         textView.setText(contact.name)
         textView = viewHolder.phoneTextView
@@ -33,11 +30,9 @@ class ContactsAdapter (private val mContacts: List<Contact>) : RecyclerView.Adap
         button.isEnabled = contact.isOnline
     }
 
-
     override fun getItemCount(): Int {
         return mContacts.size
     }
-
     class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val nameTextView = itemView.findViewById<TextView>(R.id.contact_name)
         val phoneTextView = itemView.findViewById<TextView>(R.id.contact_phone)
